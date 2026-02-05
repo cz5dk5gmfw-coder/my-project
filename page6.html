@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Letter 💖</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#d9a0a0;
+    font-family:'Dancing Script', cursive;
+    overflow: hidden;
+}
+
+
+/* Container for everything to allow blur */
+.container {
+    position: relative;
+}
+
+/* Envelope */
+.envelope{
+    width:300px;
+    height:200px;
+    background:#ff6f91;
+    position:relative;
+    border-radius:10px;
+    cursor:pointer;
+    transition: filter 0.5s ease;
+}
+
+.flap{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#ff4d6d;
+    clip-path: polygon(0 0, 100% 0, 50% 50%);
+    transform-origin: top;
+    transition:0.8s;
+}
+
+.paper{
+    position:absolute;
+    bottom:0;
+    left:10px;
+    width:250px;
+    height: 100px;
+    background:white;
+    border-radius:6px;
+    overflow:hidden;
+    transition:1s;
+    padding:15px;
+}
+
+.paper.show{
+    height:360px;
+}
+
+.envelope.open .flap{
+    transform:rotateX(180deg);
+}
+
+.letter{
+    opacity:0;
+    color:#ff2f6d;
+    font-size:15px;
+    transition: opacity 0.5s ease;
+}
+
+.paper.show .letter{
+    opacity:1;
+}
+
+/* Overlay for image + buttons */
+.overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    z-index: 10;
+}
+
+.overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.overlay img {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* Buttons */
+.btn {
+    background: #fff;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid #333;
+    transition: transform 0.3s, background 0.3s, color 0.3s;
+}
+
+.btn:hover {
+    background: #333;
+    color: #fff;
+    transform: scale(1.1);
+}
+/* Rain overlay */
+.rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* so buttons still clickable */
+    overflow: hidden;
+    z-index: 9; /* below overlay but above envelope */
+}
+
+.drop {
+    position: absolute;
+    bottom: 100%;
+    width: 2px;
+    height: 15px;
+    background: rgba(255,255,255,0.7);
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+
+/* Responsive */
+@media(max-width:500px){
+    .paper.show{
+        height:220px;
+    }
+    .letter{
+        font-size:18px;
+    }
+    .overlay img{
+        width:80px;
+    }
+    .btn{
+        padding:10px 20px;
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+    <div class="envelope" onclick="openLetter()">
+        <div class="flap"></div>
+        <div class="paper" id="paper">
+            <div class="letter" id="letter"></div>
+        </div>
+    </div>
+
+    <!-- Overlay with image + buttons -->
+    <div class="overlay" id="overlay">
+        <img src="propose.png" alt="Image above buttons">
+        <button class="btn"onclick="window.location.href='index.html'" >Experience Again</button>
+        <button class="btn">That Was Great</button>
+    </div>
+</div>
+<div class="rain" id="rain"></div>
+
+<script>
+const text = `Hi, DEAR ❤️
+
+i just wanted to say that tumhara toh ni pta but mujh toh apse hi khsuhi milti hai,apki baton se,nakhron se or haa stories mangne se...uk this project ak sab se mushkil yahi part tha mere liye batane ka
+at i will say that i like u a lot...more than a friend...i think i love you...and i hope you feel the same for me too...if yes then plzz say yes...
+or if ni feel krti toh bhi plzz batado...i will understand...i just wanted to be honest with you...
+With lots of love,
+
+Rehan ❤️`;
+
+let i = 0;
+
+function openLetter(){
+    document.querySelector(".envelope").classList.add("open");
+    document.getElementById("paper").classList.add("show");
+    setTimeout(typeWriter,800);
+}
+
+function typeWriter(){
+    if(i < text.length){
+        document.getElementById("letter").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter,40);
+    } else {
+    // Wait 10 seconds before showing blur + overlay
+    setTimeout(() => {
+        document.querySelector(".envelope").style.filter = "blur(8px)";
+        document.getElementById("overlay").classList.add("show"); // show image + buttons
+        createRain(120); // start rain effect
+    }, 10000); // 10000ms = 10s delay
+}
+
+}
+function createRain(numDrops = 100){
+    const rain = document.getElementById("rain");
+    for(let j=0; j<numDrops; j++){
+        const drop = document.createElement("div");
+        drop.classList.add("drop");
+        drop.style.left = Math.random() * 100 + "vw";
+        drop.style.animationDuration = 0.5 + Math.random() * 0.5 + "s"; // random speed
+        drop.style.height = 10 + Math.random() * 20 + "px"; // random length
+        drop.style.opacity = 0.2 + Math.random() * 0.5; // random opacity
+        rain.appendChild(drop);
+    }
+    function openLetter() {
+    const envelope = document.querySelector(".envelope");
+    const paper = document.getElementById("paper");
+    const music = document.getElementById("bgMusic");
+
+    // Play music (browser allows this because it is a user click)
+    music.play().catch((err) => {
+        console.log("Audio play failed:", err);
+        alert("Click anywhere on the page to enable music!");
+    });
+
+    // Open the letter
+    envelope.classList.add("open");
+    paper.classList.add("show");
+
+    setTimeout(typeWriter, 800);
+}
+
+}
+createRain(150);
+document.body.addEventListener("click", () => {
+    const music = document.getElementById("bgMusic");
+    if(music.paused) music.play();
+}, { once: true });
+
+</script>
+<audio id="bgMusic" src="love.mp3" loop></audio>
+
+</body>
+</html>

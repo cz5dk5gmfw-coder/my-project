@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do you love me?</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="media-box">
+   <img src="./cute4.png" alt="Cute Image">
+
+
+</div>
+
+
+    <h1>MAAN JAO NA KITNA TANG KAROG!</h1>
+
+    <p class="sub">BOHOT BURI BAAT HAI YRR!</p>
+
+    <div class="buttons">
+      
+        <button class="yes" id="yesBtn" onclick="window.location.href='page5.html'" >Yes</button>
+    <button class="no" id="noBtn">No</button>
+    </div>
+
+</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * 400 - 100;
+    const y = Math.random() * 100 - 100;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do you love me?</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="media-box">
+   <img src="./cute5.png" alt="Cute Image">
+   
+
+
+</div>
+<div id="hearts"></div>
+
+<script>
+const heartsContainer = document.getElementById("hearts");
+
+function createHeart(){
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+
+    heartsContainer.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },5000);
+}
+
+setInterval(createHeart, 300);
+</script>
+
+
+
+
+
+    <h1>I KNEW IT THAT U LOVE ME A LOT❤️</h1>
+
+    <p class="sub">HERE IS URE MAGICAL LETTER</p>
+
+    <div class="buttons">
+      
+        
+    <button  class="no" id="noBtn" onclick="window.location.href='page6.html'"  >SHOW MY LETTER💌</button>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>
